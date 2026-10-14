@@ -4,6 +4,7 @@ const connectDB = require("./src/config/database.js");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const app = express();
+require("dotenv").config();
 // const cors from "cors"
 
 
@@ -32,7 +33,7 @@ app.use("/" , userRouter);
 
 connectDB()
   .then(() => {
-    app.listen(8080, () => {
+    app.listen(process.env.PORT, () => {
       console.log("Succesfully running on 8080...");
     });
   })
