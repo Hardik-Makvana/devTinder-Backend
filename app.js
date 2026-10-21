@@ -22,14 +22,12 @@ app.use((req, res, next) => {
   next();
 });
 
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://your-frontend-domain.vercel.app",
-];
-
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: [
+      "http://localhost:5173",
+      "https://devtinder-1idonepqs-hardik-makvanas-projects.vercel.app",
+    ],
     credentials: true,
   }),
 );
