@@ -22,9 +22,14 @@ app.use((req, res, next) => {
   next();
 });
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://your-frontend-domain.vercel.app",
+];
+
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: allowedOrigins,
     credentials: true,
   }),
 );
@@ -50,8 +55,10 @@ intializeSocket(server);
 
 connectDB()
   .then(() => {
-    server.listen(process.env.PORT, () => {
-      console.log("Succesfully running on 8080...");
+    const PORT = process.env.PORT || 8080;
+
+    server.listen(PORT, () => {
+      console.log(`Successfully running on port ${PORT}...`);
     });
   })
   .catch((err) => {
