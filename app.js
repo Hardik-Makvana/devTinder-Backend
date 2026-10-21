@@ -22,17 +22,18 @@ app.use((req, res, next) => {
   next();
 });
 
+
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://dev-tinder-1idonepqs-hardik-makvanas-projects.vercel.app",
+  "https://dev-tinder-web-two-steel.vercel.app",
+  "https://dev-tinder-1idonepqs-hardik-makvanas-projects.vercel.app"
 ];
 
-app.use(
-  cors({
-    origin: allowedOrigins,
-    credentials: true,
-  }),
-);
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true
+}));
+
 
 app.use(express.json());
 app.use(cookieParser());
