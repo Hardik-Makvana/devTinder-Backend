@@ -44,6 +44,16 @@ userRouter.get("/user/connections", userAuth, async (req, res) => {
       .populate("fromUserId", USER_SAFE_DATA)
       .populate("toUserId", USER_SAFE_DATA);
 
+    console.log("Logged-in user ID:", loggedInUser);
+
+    connectionRequest.forEach((row) => {
+      console.log({
+        fromUserId: row.fromUserId?._id?.toString(),
+        toUserId: row.toUserId?._id?.toString(),
+        status: row.status,
+      });
+    });
+
     const data = connectionRequest.map((row) => {
       if (row.fromUserId._id.toString() === loggedInUser.toString()) {
         return row.toUserId;
@@ -53,18 +63,19 @@ userRouter.get("/user/connections", userAuth, async (req, res) => {
 
     res.json({ data });
   } catch (err) {
-    res.status(400).send("Error" + err.message);
+    res.status(400).send("Error " + err.message);
   }
 });
 
 userRouter.get("/feed", userAuth, async (req, res) => {
   try {
-    //user should see all the user excepet
+    //user should  see all the user excepet
 
     //already sent connection request
     //already rejectred that
     //already have a connection
-    //his own card ni
+    //his own card ni00
+
 
     const loggedInUser = req.user;
 
@@ -97,10 +108,10 @@ userRouter.get("/feed", userAuth, async (req, res) => {
       .skip(skip)
       .limit(limit);
 
-    console.log("Logged in user:", loggedInUser._id);
-    console.log("Hidden user IDs:", Array.from(hidUserFromFeed));
-    console.log("Users found:", users.length);
-    console.log(users);
+    // console.log("Logged in user:", loggedInUser._id);
+    // console.log("Hidden user IDs:", Array.from(hidUserFromFeed));
+    // console.log("Users found:", users.length);
+    // console.log(users);
     res.json({ data: users });
   } catch (err) {
     res.status(400).send("error" + err.message);

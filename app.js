@@ -4,12 +4,22 @@ const connectDB = require("./src/config/database.js");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const app = express();
-const http = require("https");
+const http = require("http");
 require("dotenv").config();
 // const cors from "cors"
 
 app.use("/app", (req, res) => {
   res.send("Hello bhaioo");
+});
+
+app.use((req, res, next) => {
+  const start = Date.now();
+
+  res.on("finish", () => {
+    console.log(`${req.method} ${req.originalUrl} - ${Date.now() - start}ms`);
+  });
+
+  next();
 });
 
 app.use(
@@ -18,7 +28,7 @@ app.use(
     credentials: true,
   }),
 );
-``;
+
 app.use(express.json());
 app.use(cookieParser());
 
@@ -27,11 +37,13 @@ const profileRouter = require("./src/routes/profile.js");
 const requestRouter = require("./src/routes/requests.js");
 const userRouter = require("./src/routes/user.js");
 const intializeSocket = require("./src/utils/intializeSocket.js");
+const chatRouter = require("./src/routes/chat.js");
 
 app.use("/", authRouter);
 app.use("/", profileRouter);
 app.use("/", requestRouter);
 app.use("/", userRouter);
+app.use("/", chatRouter);
 
 const server = http.createServer(app);
 intializeSocket(server);
