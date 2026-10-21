@@ -5,9 +5,15 @@ const ConnectionRequest = require("../model/connectionRequest.js");
 const intializeSocket = (server) => {
   const io = socket(server, {
     cors: {
-      origin: "http://localhost:5173",
+      origin: [
+        "http://localhost:5173",
+        "https://dev-tinder-1idonepqs-hardik-makvanas-projects.vercel.app",
+      ],
+      credentials: true,
     },
   });
+
+  // Keep your existing io.on("connection", ...) code below.
 
   io.on("connection", (socket) => {
     console.log("Socket connected:", socket.id);
